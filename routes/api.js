@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { query } = require("express");
 const Workout = require("../models/workout");
-const workout = require("../models/workout");
 
 router.post("/api/workouts", ({ body }, res) => {
   Workout.create({})
@@ -63,3 +62,5 @@ router.delete("/api/workouts", ({ body }, res) => {
       res.json(400).json(err);
     });
 });
+
+module.exports = router;
