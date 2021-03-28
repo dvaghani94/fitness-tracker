@@ -15,7 +15,7 @@ router.post("/api/workouts", ({ body }, res) => {
 // getting workout by ID
 
 router.get("/api/workouts", (req, res) => {
-  Workout.find({})
+  Workout.find()
   .then(dbWorkout => {
     res.json(dbWorkout);
   })
@@ -28,8 +28,8 @@ router.get("/api/workouts", (req, res) => {
 
 router.put("/api/workouts/:id", ({ params, body }, res) => {
   Workout.findByIdAndUpdate(params.id,
-    {$push: { exercise: body } },
-    { new: true, runValidators: true } 
+    { $push: { exercises: body } },
+    // { new: true } 
     )
     .then(dbWorkout => {
       res.json(dbWorkout);
@@ -42,7 +42,8 @@ router.put("/api/workouts/:id", ({ params, body }, res) => {
 // look up .aggregate for mongoose in order to get duration range 
 
 router.get("/api/workouts/range", (req, res) => {
-  Workout.find({ day: { $gte: query.start, $lte: query.end } })
+  Workout.find()
+  .limit(7)
   .then(dbWorkout => {
     res.json(dbWorkout);
   })
