@@ -1,25 +1,26 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const path = require("path");
 
 const PORT = 3000;
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //bring in mongoose.connect
-// const connection = mongoose.connect;
-// connection('open', () => {
-//   console.log("MongoDB database connection established successfully");
-// })
+const connection = mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workouts", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", 
-{ useNewUrlParser: true },
-);
 //Declare routes
 const api = require('./routes/api');
 const html = require('./routes/html');
+
 //Declare api routes
 app.use('/api', api);
 app.use('/html', html);
