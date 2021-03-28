@@ -22,6 +22,10 @@ const workoutSchema = new Schema({
                 type: Number,
                 required: "Enter the duration"
             },
+            distance: {
+                type: Number,
+                required: "Enter the distance covered"
+            },
             weight: {
                 type: Number,
                 required: "Enter the weight"
