@@ -3,7 +3,7 @@ const { query } = require("express");
 const Workout = require("../models/workout");
 
 router.post("/api/workouts", ({ body }, res) => {
-  Workout.create({})
+  Workout.create(body)
     .then((dbWorkout) => {
       res.json(dbWorkout);
     })
@@ -13,6 +13,18 @@ router.post("/api/workouts", ({ body }, res) => {
 });
 
 // getting workout by ID
+
+router.get("/api/workouts", (req, res) => {
+  Workout.find({})
+  .then(dbWorkout => {
+    res.json(dbWorkout);
+  })
+  .catch((err) => {
+    res.status(400).json(err);
+  });
+})
+
+// look up .aggregate for mongoose in order to get duration
 
 router.put("/api/workouts/:id", ({ params, body }, res) => {
   Workout.findByIdAndUpdate(params.id,
@@ -26,18 +38,6 @@ router.put("/api/workouts/:id", ({ params, body }, res) => {
       res.status(400).json(err);
     });
 });
-
-// look up .aggregate for mongoose in order to get duration
-
-router.get("/api/workouts", (req, res) => {
-  Workout.find()
-  .then(dbWorkout => {
-    res.json(dbWorkout);
-  })
-  .catch((err) => {
-    res.status(400).json(err);
-  });
-})
 
 // look up .aggregate for mongoose in order to get duration range 
 
