@@ -42,7 +42,7 @@ router.put("/api/workouts/:id", ({ params, body }, res) => {
 // look up .aggregate for mongoose in order to get duration range 
 
 router.get("/api/workouts/range", (req, res) => {
-  Workout.aggregate({ $addFields: { totalDuration: { $sum: "$duration" } } }) 
+  Workout.aggregate([ { $addFields: { totalDuration: { $sum: "$exercises.duration" } } } ]) 
   .then(dbWorkout => {
     res.json(dbWorkout);
   })
